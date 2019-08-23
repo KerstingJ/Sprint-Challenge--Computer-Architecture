@@ -118,9 +118,25 @@ class CPU:
         self.PC += 3
 
     def AND(self):
-        debug("calling AND")
-        self.PC += 1
-        pass
+        """
+        *This is an instruction handled by the ALU.*
+
+        `AND registerA registerB`
+
+        Bitwise-AND the values in registerA and registerB, then store the result in
+        registerA.
+
+        Machine code:
+        ```
+        10101000 00000aaa 00000bbb
+        A8 0a 0b
+        ```
+        """
+        reg_a = self.ram_read(self.PC + 1)
+        reg_b = self.ram_read(self.PC + 2)
+        debug(f"AND R{reg_a}, R{reg_b}")
+        self.reg[reg_a] = self.reg[reg_a] & self.reg[reg_b]
+        self.PC += 3
 
     def CALL(self):
         debug(f"CALL R{self.ram_read(self.PC + 1)}")
